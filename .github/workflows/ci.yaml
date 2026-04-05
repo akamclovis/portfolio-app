@@ -8,8 +8,8 @@ jobs:
               uses: actions/checkout@v4
             - name: build image
               run: |
-                docker build -t ${{ secrets.DOCKER_USERNAME }}/ciportfolio
-                docker build -t ${{ secrets.DOCKER_USERNAME }}/ciportfolio:${{github.run_number}}  
+                docker build -t ${{ secrets.DOCKER_USERNAME }}/ciportfolio .
+                docker build -t ${{ secrets.DOCKER_USERNAME }}/ciportfolio:${{github.run_number}} .  
             - name: list images
               run: docker images
             - name: login to docker
