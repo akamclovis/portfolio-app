@@ -22,17 +22,17 @@ jobs:
                 docker push ${{ secrets.DOCKER_USERNAME }}/ciportfolio
                 docker push ${{ secrets.DOCKER_USERNAME }}/ciportfolio:${{github.run_number}}
                 
-    #deploy:
-        #needs: build
-        #runs-on: ubuntu-latest
-        #steps:
-            #- name: ssh to linux and run container
-              #uses: appleboy/ssh-action@v1
-              #with:
-                #host: ${{ secrets.HOST }}
-                #username: ${{ secrets.SSH_USERNAME }}
-                #key: ${{ secrets.PRIVATE_KEY }}
-                #port: ${{ secrets.PORT }}
-                #script: |
-                   #docker rm -f portfolio || echo ""
-                   #docker run -d --name portfolio -p 8080:80 ${{secrets.DOCKER_USERNAME}}/ciportofolio
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: ssh to linux and run container
+              uses: appleboy/ssh-action@v1
+              with:
+                host: ${{ secrets.HOST }}
+                username: ${{ secrets.SSH_USERNAME }}
+                key: ${{ secrets.PRIVATE_KEY }}
+                port: ${{ secrets.PORT }}
+                script: |
+                   docker rm -f portfolio || echo ""
+                   docker run -d --name portfolio -p 8080:80 ${{secrets.DOCKER_USERNAME}}/ciportofolio
