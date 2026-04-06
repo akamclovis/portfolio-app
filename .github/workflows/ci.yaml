@@ -36,4 +36,5 @@ jobs:
                 script: |
                    docker --version
                    docker rm -f portfolio || echo " container not found"
+                   docker rmi -f ${{ secrets.USERNAME }}/ciportfolio
                    docker run -d --name portfolio -p 8080:80 ${{secrets.DOCKER_USERNAME}}/ciportfolio
